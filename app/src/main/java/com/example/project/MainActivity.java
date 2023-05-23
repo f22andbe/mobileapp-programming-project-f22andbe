@@ -50,8 +50,50 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     }
 
+    /* parse JSON data and update view */
+    @Override
+    public void onPostExecute(String json) {
+        /* parse json into AminoAcid objects */
+        //aminoArrayList.clear();
+        Log.d("onPostExecute", "json-string = " + json);
+        aminoArrayList.addAll(gson.fromJson(json, type));
+        mAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        int id = item.getItemId();
+
+        /* start JsonTask and fetch data */
+        if (id == R.id.action_get_data) {
+
+            /* get JSON data from webservice */
+            new JsonTask(this).execute(JSON_URL);
+            return true;
+        }
+
+        /* clear data and RecyclerView */
+        if (id == R.id.action_clear_data) {
+            Log.d("onOptionItemSelected","clear data");
+            /* clear data */
+            aminoArrayList.clear();
+            mAdapter.notifyDataSetChanged();
+            return true;
+        }
+        /* start about activity */
+        if(id == R.id.about_screen) {
+            //startActivity(new Intent(this, AboutActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }
