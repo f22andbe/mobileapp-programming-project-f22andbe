@@ -1,6 +1,5 @@
 package com.example.project;
 
-import com.google.gson.annotations.SerializedName;
 
 public class AminoAcid {
     String ID;
@@ -46,6 +45,8 @@ public class AminoAcid {
     public void setAuxdata(WikiData auxdata) {
         this.auxdata = auxdata;
     }
+
+
 
     @Override
     public String toString() {
