@@ -1,7 +1,9 @@
 package com.example.project;
 
 import android.content.Intent;
+
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
+
 @SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     RecyclerView recyclerView;
     Type type;
     AminoAcidViewAdapter mAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +49,21 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        /* initialize settings handling */
+
+
+
         /* setup JSON parser */
         gson = new Gson();
         type = new TypeToken<ArrayList<AminoAcid>>(){}.getType();
+
+    }
+
+
+
+
+
+
 
     }
 
@@ -56,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         /* parse json into AminoAcid objects */
         //aminoArrayList.clear();
         Log.d("onPostExecute", "json-string = " + json);
+
         aminoArrayList.addAll(gson.fromJson(json, type));
         mAdapter.notifyDataSetChanged();
     }
@@ -90,9 +108,9 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         }
         /* start about activity */
         if(id == R.id.about_screen) {
-            //startActivity(new Intent(this, AboutActivity.class));
+            startActivity(new Intent(this, AboutActivity.class));
         }
-
+        
         return super.onOptionsItemSelected(item);
     }
 
