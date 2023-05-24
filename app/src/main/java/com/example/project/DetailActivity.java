@@ -96,11 +96,43 @@ public class DetailActivity extends AppCompatActivity implements JsonTask.JsonTa
     }
 
 
+    /* Use mediawiki action api to download part of the wiki page at
+     * the url we got via intent, use org.json to parse the json response
+     * from action api. We use org.json instead of gson because it's better
+     * at extracting string data from json instead of marshalling it into  an object
+     */
+    private static String extractSummary(String jsonString) {
+        String summary = "";
+        String key="";
+        try {
+
+            // Parse the JSON response
+            /*summary = new JSONObject(jsonString)
+                          .getJSONObject("query")
+                          .getJSONObject("pages")
+                          .getJSONObject("63539").getString("extract"); */
+
+            JSONObject response = new JSONObject(jsonString)
+                    .getJSONObject("query")
+                    .getJSONObject("pages");
+
+            for (Iterator <String> k = response.keys(); k.hasNext();) {
+                key = k.next();
+                Log.d("keys in pages", "Object Name: " + key);
+            }
+            summary = response.getJSONObject(key).getString("extract");
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return summary;
+    }
 
     @Override
     public void onPostExecute(String response) {
         Log.d("onPostExecute", "jsonstring: " + response);
-        aminoWikiTextView.setText("test");
+        aminoWikiTextView.setText(response);
     }
 
 }
