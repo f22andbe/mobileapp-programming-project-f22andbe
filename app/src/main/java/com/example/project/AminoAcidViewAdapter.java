@@ -25,17 +25,26 @@ public class AminoAcidViewAdapter extends RecyclerView.Adapter<AminoAcidViewAdap
         this.aminoList = aminoList;
     }
 
+    /* this gets called everytime the adapter needs to create a new viewholder
+    *  it inflates the view defined in res/layout/recycler_layout.xml, passes that
+    *  to the constructor for the viewholder that can use it to create a viewholder object
+    *  which is then passed back to the adapter to show when needed */
     @Override
     public AminoAcidViewAdapter.AminoAcidViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
+
+        //set the layout defined in recycler_layout.xml as the layout for the view
         View view = inflater.inflate(R.layout.recycler_layout, parent, false);
 
         return new AminoAcidViewAdapter.AminoAcidViewHolder(view);
     }
 
+    /* this gets called every time a viewholder is about to be displayed on screen, it binds
+     * the data to be displayed in the viewholder to it
+     */
     @Override
     public void onBindViewHolder(AminoAcidViewAdapter.AminoAcidViewHolder holder, int position) {
-        String imageUrl = aminoList.get(position).auxdata.getImg();
+        //String imageUrl = aminoList.get(position).auxdata.getImg();
         holder.aminoName.setText("Name: " + aminoList.get(position).getName());
 
         holder.aminoThreeLetterSymbol.setText("Three letter symbol: " + aminoList.get(position).auxdata.getThreeLetterSymbol());
@@ -43,14 +52,17 @@ public class AminoAcidViewAdapter extends RecyclerView.Adapter<AminoAcidViewAdap
         holder.aminoOneLetterSymbol.setText("Class: " + aminoList.get(position).auxdata.getCategory() );
         //holder.aminoWiki.setText("Wiki: " + aminoList.get(position).auxdata.getWikipage());
 
-
-
+        /* the the background color of the viewholder */
         if((position % 2) == 0) {
             holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.lightgrey));
         }else{
             holder.itemView.setBackgroundColor(context.getResources().getColor(R.color.lightblue));
         }
 
+        /* This is the click listener for viewholder, everytime there
+         * is a click it packs information into an intent and starts
+         * the DetailActivity
+         */
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +86,7 @@ public class AminoAcidViewAdapter extends RecyclerView.Adapter<AminoAcidViewAdap
         return aminoList.size();
     }
 
+    /* this defines the dataitems that the viewadapter manages */
     public static class AminoAcidViewHolder extends RecyclerView.ViewHolder {
 
         TextView aminoName;

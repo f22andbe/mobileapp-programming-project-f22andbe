@@ -24,7 +24,7 @@ import java.util.ArrayList;
 @SuppressWarnings("FieldCanBeLocal")
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
-    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=f22andbe";
+    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=f22andbe"; //this is where we get our data
 
     private ArrayList<AminoAcid> aminoArrayList;
     private Gson gson;
@@ -45,15 +45,18 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         recyclerView = findViewById(R.id.recyclerView);
 
         /* Set up adapter */
+        // the viewadapter to this activity and aminoArrayList
         mAdapter = new AminoAcidViewAdapter(this, aminoArrayList);
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter); // set mAdapter as the adapter of recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        /* initialize settings handling */
+        /* initialize settings handling, the name of our shared
+        *  preference storage is set in the EditPreferencesFragment */
         settings =  getSharedPreferences("com.example.project.user_preferences", MODE_PRIVATE); // get object of type  SharedPreferences
 
 
-        /* setup JSON parser */
+        /* setup JSON parser, this will marshall our json data into an
+        *  ArrayList of AminoAcid objects */
         gson = new Gson();
         type = new TypeToken<ArrayList<AminoAcid>>(){}.getType();
 
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
 
     /* This is a private helper function to filter out all the amino acids from aminoArrayList
-     * that belong to groups that have been chosen by the user to be filtered out in the settings
+     * that belong to groups that have been chosen by the user to be filtered out in the settings.
      * If the CheckBox for the preference is set to true we define a predicate that evaluates to
      * true if the category defined in auxdata (of type Wikidata) contains the string sent to the
      * predicate. We then use the method removeIf(predicate) to delete all amino acids in
@@ -69,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
      */
     private void filterData(){
 
+        /* pref_amide, pref_anion etc are the keys for the respective CheckBoxPreference defined
+         * in res/xml/preferences.xml. The second argument to getBoolean is the value it should
+         * return if they key isn't found. So if the key isn't found we don't filter anything
+         */
         if(settings.getBoolean("pref_amide", false)){
             Predicate<AminoAcid> predicate = acid -> acid.getAuxdata().getCategory().contains("Amide");
             aminoArrayList.removeIf(predicate);
@@ -88,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     }
 
-    /* parse JSON data and update view */
+    /* unmarshall JSON-data into an arraylist of aminoacid objects,
+     filter out objects according to settings and update view */
     @Override
     public void onPostExecute(String json) {
         /* parse json into AminoAcid objects */
@@ -102,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         mAdapter.notifyDataSetChanged();
     }
 
+    /* inflate menu defined in res/menu/menu_main.xml */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -109,9 +118,13 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         return true;
     }
 
+    /* this is where we process clicks on the menu items */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        /* the item clicked gets passed, determine what
+         * its id is. The id's are set in res/menu/menu_main.xml
+         */
         int id = item.getItemId();
 
         /* start JsonTask and fetch data */

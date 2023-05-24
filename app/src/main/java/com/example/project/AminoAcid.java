@@ -2,9 +2,18 @@ package com.example.project;
 
 
 public class AminoAcid {
+
+    /* these are the three attributes from our json data outside
+     * of auxdata that we collect
+     */
+
     String ID;
     String name;
     String type; //this is Login
+
+    /* here is where we collect the attributes that are inside
+     * auxdata:{...} in our json data
+     */
     WikiData auxdata;
 
     public AminoAcid(String ID, String name, String type, WikiData auxdata) {

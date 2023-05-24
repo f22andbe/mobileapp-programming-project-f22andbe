@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AboutActivity extends AppCompatActivity {
 
-    private TextView textView;
-    private ImageView imageView;
+    private TextView textView; //this is where we show our about text
+    private ImageView imageView; //this is where we show our logo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
