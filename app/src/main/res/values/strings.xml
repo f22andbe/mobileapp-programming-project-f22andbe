@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">Project</string>
+    <string name="app_name">Aminoacids</string>
+    <string name ="fetch_web_data">Get data</string>
+    <string name="clear_data">Clear data</string>
+    <string name="about_string">A reference program for chemists and students \n\nThis program presents information about aminoacids that it gets from a webservice\n\n\nVersion 0.01\n\n\nAuthor: f22andbe</string>
 </resources>
