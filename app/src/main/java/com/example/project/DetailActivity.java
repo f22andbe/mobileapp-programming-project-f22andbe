@@ -79,9 +79,21 @@ public class DetailActivity extends AppCompatActivity implements JsonTask.JsonTa
         aminoOneLetterSymbolView.setText("One letter symbol: " + intent.getStringExtra("aminoonelettersymbol") );
         aminoWikiUrlView.setVisibility(View.GONE);
         //aminoWikiUrlView.setText("Wiki: " + intent.getStringExtra("aminowikiurl"));
-        //loadImage(intent.getStringExtra("aminoimgurl"), aminoImageView);
+        loadImage(intent.getStringExtra("aminoimgurl"), aminoImageView);
     }
 
+    private void loadImage(String url, ImageView imageView){
+        // Set RequestOptions for Glide
+        RequestOptions requestOptions = new RequestOptions().error(R.drawable.error_image) //if image can't be loaded from url show error_image instead
+                .fitCenter() //scale image down to size of imageview
+                .transform(new RoundedCorners(16)) //give image rounded corners
+                .diskCacheStrategy(DiskCacheStrategy.ALL); // Cache both original and resized image
+        // Load the image with Glide
+        Glide.with(context)                //context of the DetailActivity
+                .load(url)
+                .apply(requestOptions) //apply specified options to this request
+                .into(imageView);      //this is the imageView the image should be shown in
+    }
 
 
 
