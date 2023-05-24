@@ -56,10 +56,32 @@ public class DetailActivity extends AppCompatActivity implements JsonTask.JsonTa
         aminoWikiUrlView = findViewById(R.id.aminowikiurl);
         aminoWikiTextView = findViewById(R.id.aminowikitext);
         aminoImageView = findViewById(R.id.aminoimage); //here we get a reference to it
-        new JsonTask(this).execute("https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=Alanine");
 
+        String wikiPage;
+        String apiUrl = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=";
+        //String apiUrl = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&explaintext=1&titles="; // this is the string that is used to call the MediaWikiAction api
+
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            setViews(intent);
+            wikiPage = apiUrl + intent.getStringExtra("aminoname");
+            Log.d("before JsonTask/wikiPageTitle", wikiPage);
+            new JsonTask(this).execute(wikiPage);
+            //new JsonTask(this).execute(apiUrl);
+        }
 
     }
+
+    public void setViews(Intent intent) {
+        aminoNameView.setText("Name: " + intent.getStringExtra("aminoname"));
+        aminoThreeLetterSymbolView.setText("Three letter symbol: " + intent.getStringExtra("aminothreelettersymbol"));
+        aminoOneLetterSymbolView.setText("One letter symbol: " + intent.getStringExtra("aminoonelettersymbol") );
+        aminoWikiUrlView.setVisibility(View.GONE);
+        //aminoWikiUrlView.setText("Wiki: " + intent.getStringExtra("aminowikiurl"));
+        //loadImage(intent.getStringExtra("aminoimgurl"), aminoImageView);
+    }
+
 
 
 
