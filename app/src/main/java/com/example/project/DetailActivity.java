@@ -132,7 +132,8 @@ public class DetailActivity extends AppCompatActivity implements JsonTask.JsonTa
     @Override
     public void onPostExecute(String response) {
         Log.d("onPostExecute", "jsonstring: " + response);
-        aminoWikiTextView.setText(response);
+        String text = extractSummary(response);
+        aminoWikiTextView.setText(text);
     }
 
 }
