@@ -1,0 +1,75 @@
+package com.example.project;
+
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Iterator;
+
+public class DetailActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
+    Context context;
+    TextView aminoNameView;
+    TextView aminoThreeLetterSymbolView;
+    TextView aminoOneLetterSymbolView;
+    TextView aminoCategoryView;
+    TextView aminoWikiUrlView;
+    TextView aminoWikiTextView;
+    ImageView aminoImageView; // we now also have an ImageView in the ViewHolder
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.detail_layout);
+        context = this;
+
+        aminoNameView = findViewById(R.id.aminoname);
+        aminoThreeLetterSymbolView = findViewById(R.id.aminothreeletter);
+        aminoOneLetterSymbolView = findViewById(R.id.aminooneletter);
+        aminoWikiUrlView = findViewById(R.id.aminowikiurl);
+        aminoWikiTextView = findViewById(R.id.aminowikitext);
+        aminoImageView = findViewById(R.id.aminoimage); //here we get a reference to it
+        new JsonTask(this).execute("https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&titles=Alanine");
+
+
+    }
+
+
+
+    @Override
+    public void onPostExecute(String response) {
+        Log.d("onPostExecute", "jsonstring: " + response);
+        aminoWikiTextView.setText("test");
+    }
+
+}
+
+
+
