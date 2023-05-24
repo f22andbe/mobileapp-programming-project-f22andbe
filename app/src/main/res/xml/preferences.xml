@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- FilterData Category -->
+    <PreferenceCategory
+        android:title="Filter out amino acids by class">
+        <CheckBoxPreference
+            android:key="pref_amide"
+            android:title="Amide"
+            android:summary="Remove acids belonging to the class Amide" />
+        <CheckBoxPreference
+            android:key="pref_anion"
+            android:title="Anion"
+            android:summary="Remove acids belonging to the class Anion" />
+        <CheckBoxPreference
+            android:key="pref_fixedcation"
+            android:title="Fixed Cation"
+            android:summary="Remove acids belonging to the class Fixed Cation" />
+        <CheckBoxPreference
+            android:key="pref_thiol"
+            android:title="Thiol"
+            android:summary="Remove acids belonging to the class Thiol" />
+
+
+    </PreferenceCategory>
+
+    <!-- FilterAttributes Category -->
+
+
+
+</PreferenceScreen>
